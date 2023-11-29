@@ -1,0 +1,62 @@
+{% load static %}
+
+<!-- templates/linkedin_app/signin.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Friendflare - Sign In</title>
+    <link rel="stylesheet" href="{% static 'css/signin.css' %}">
+    <!-- Link to your main CSS file or include inline styles here -->
+</head>
+
+<body>
+
+    <header>
+        <h1>Friendflare</h1>
+    </header>
+
+    <main>
+        <section id="signin-form">
+            <h2>Sign In</h2>
+
+
+
+            <div>
+                <style>
+                    h5{
+                        color: red;
+                    }
+                </style>
+                {% for message in messages %}
+                <h5>{{message}}</h5>
+                {% endfor %}
+            </div>
+
+            
+            <form method="post" action="{% url 'signin' %}">
+                {% csrf_token %}
+                
+                <label for="username">Username:</label>
+                <input type="text" id="username" name="username" required>
+
+                <label for="password">Password:</label>
+                <input type="password" id="password" name="password" required>
+
+                <button type="submit">Sign In</button>
+            </form>
+
+            <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a>.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; Friendflare</p>
+    </footer>
+
+</body>
+
+</html>
