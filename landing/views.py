@@ -178,14 +178,21 @@ def broadcast_panel(request):
     user_following = FollowersCount.objects.filter(follower=request.user.username)
 
     for users in user_following:
-        user_following_list.append(users.user)
+        user_following_list.append(users)
 
+    broadcast_dict = {}
     for usernames in user_following_list:
-        broadcast_lists = Broadcast.objects.filter(user=usernames)
+        broadcast_lists = Broadcast.objects.filter(user=usernames.user)
         broadcast.append(broadcast_lists)
 
     broadcast_list = list(chain(*broadcast))
-    return render(request, 'broadcast.html',{'user_profile': user_profile, 'broadcasts':broadcast_list})
+
+    for broadcasts in broadcast_list:
+        user_object = User.objects.get(username=broadcasts.user)
+        broadcast_profile = Profile.objects.get(user=user_object)
+        broadcast_dict[broadcasts] = broadcast_profile
+
+    return render(request, 'broadcast.html',{'user_profile': user_profile, 'broadcasts':broadcast_dict })
     
 
 @login_required(login_url='signin')
