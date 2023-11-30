@@ -80,6 +80,7 @@ def upload(request):
 def profile(request, pk):
     user_object = User.objects.get(username=pk)
     user_profile = Profile.objects.get(user=user_object)
+    user_role = user_profile.role
     user_posts = Post.objects.filter(user=pk)
     user_broadcast = Broadcast.objects.filter(user=pk)
     user_post_length = len(user_posts)
@@ -106,6 +107,7 @@ def profile(request, pk):
         'button_text': button_text,
         'user_followers': user_followers,
         'user_following': user_following,
+        'user_role' : user_role,
     }
     return render(request, 'profile.html', context)
 

@@ -30,7 +30,13 @@
 				<form action="/follow" method="POST">
 					{% csrf_token %}
 					<div class="add-btn">
-					
+						{% if user_role == 'student' %}
+						<span style="color: white; font-size: 27px;"><b>STUDENT</b></span>
+						{% else %}
+						<span style="color: white; font-size: 27px;"><b>COMPANY HR</b></span>
+						{% endif %}
+
+
 					{% if user_post_length == 0 %}
 					<span style="color: white; font-size: 27px;"><b>No Post</b></span>
 					{% elif user_post_length == 1 %}
